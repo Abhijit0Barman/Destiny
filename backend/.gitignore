@@ -1,0 +1,23 @@
+# Ignore Node.js modules
+node_modules/
+
+# Ignore TypeScript build output
+dist/
+
+# Ignore environment configuration files
+.env
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore logs
+*.log
+
+# Ignore npm debug log
+npm-debug.log
+
+# Ignore .DS_Store (macOS system file)
+.DS_Store
+
+# Ignore TypeScript configuration cache
+tsconfig.tsbuildinfo
