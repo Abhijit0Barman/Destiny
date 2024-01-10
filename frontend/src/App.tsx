@@ -22,22 +22,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              {/* <Home /> */}
-            </Layout>
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <Layout>
-              {/* <Search /> */}
-            </Layout>
-          }
-        />
+        <Route path="/" element={<Layout></Layout>} />
+        <Route path="/search" element={<>Search page</>} />
+        <Route path="*" element={<Navigate to="/" />} />
+
         <Route
           path="/detail/:hotelId"
           element={
@@ -108,7 +96,6 @@ const App = () => {
             />
           </>
         )} */}
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
