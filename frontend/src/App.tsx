@@ -22,7 +22,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout></Layout>} />
+        <Route path="/" element={<Layout>z</Layout>} />
         <Route path="/search" element={<>Search page</>} />
         <Route path="*" element={<Navigate to="/" />} />
 
@@ -30,7 +30,7 @@ const App = () => {
           path="/detail/:hotelId"
           element={
             <Layout>
-              {/* <Detail /> */}
+              {/* <Detail /> */}z
             </Layout>
           }
         />
@@ -38,7 +38,7 @@ const App = () => {
           path="/register"
           element={
             <Layout>
-              {/* <Register /> */}
+              {/* <Register /> */}z
             </Layout>
           }
         />
@@ -46,7 +46,7 @@ const App = () => {
           path="/sign-in"
           element={
             <Layout>
-              {/* <SignIn /> */}
+              {/* <SignIn /> */}z
             </Layout>
           }
         />
