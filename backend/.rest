@@ -1,0 +1,14 @@
+GET http://localhost:7000/test
+
+###
+
+POST http://localhost:7000/api/users/register
+content-type: application/json
+{
+    "email": "abc@gmail.com",
+    "password": "123456",
+    "firstName": "John",
+    "lastName": "Doe",
+}
+
+###
