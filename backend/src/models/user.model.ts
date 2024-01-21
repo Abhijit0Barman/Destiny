@@ -28,7 +28,7 @@ userSchema.pre("save", async function (next) {
 /**
  *  this middleware ensures that every time a document of this schema is about to be saved,
  * it checks if the "password" field has been modified.
- * If so, it hashes the password using bcrypt and then allows the save operation to proceed.
+ * If so, it hashes the password using bcryptjs and then allows the save operation to proceed.
  * This is a common practice for securing user passwords by storing only their hashed versions in the database.
  */
 
