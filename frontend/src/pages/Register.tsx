@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from "../pages/api-client";
+import { useAppContext } from "../contexts/AppContext";
 
-type RegisterFormData = {
+export type RegisterFormData = {
   firstName: string;
   lastName: string;
   email: string;
@@ -10,6 +13,8 @@ type RegisterFormData = {
 
 // Register component for user registration
 const Register = () => {
+  const { showToast } = useAppContext();
+
   // useForm hook from react-hook-form library to handle form validation and submission
   const {
     register, // function to register fields for validation
@@ -18,9 +23,21 @@ const Register = () => {
     formState: { errors }, // object containing form validation errors
   } = useForm<RegisterFormData>();
 
+  const mutation = useMutation(apiClient.register, {
+    onSuccess: () => {
+      showToast({message:"Registration Success!",type:"SUCCESS"})
+      // console.log(`Registration Successfully ok`);
+    },
+    onError: (error: Error) => {
+      showToast({message:error.message,type:"ERROR"})
+      // console.log(error.message);
+    },
+  });
+
   // onSubmit function to handle form submission
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    // console.log(data);
+    mutation.mutate(data);
   });
 
   return (
