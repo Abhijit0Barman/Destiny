@@ -16,15 +16,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
 app.get("/test", (req: Request, res: Response) => {
-  res.json({
-    message: `Express Server Running http://localhost:${
-      process.env.PORT || 7000
-    }`,
-  });
+  res.json({ message: `Express Server Running http://localhost:${process.env.PORT}` });
 });
 
-app.listen(process.env.PORT || 7000, () => {
-  console.log(
-    `Server is running at http://localhost:${process.env.PORT || 7000}`
-  );
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });
