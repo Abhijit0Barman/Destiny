@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema<UserType>({
   password: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-},  { versionKey: false });
+},  {  timestamps: true }); //versionKey: false,
 
 //⭐⭐⭐ MiddleWare ⭐⭐⭐
 userSchema.pre("save", async function (next) {

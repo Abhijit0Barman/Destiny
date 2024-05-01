@@ -1,10 +1,5 @@
 import { Layout } from "./layouts/Layout";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, } from "react-router-dom";
 import Register from "./pages/Register";
 // import SignIn from "./pages/SignIn";
 // import AddHotel from "./pages/AddHotel";

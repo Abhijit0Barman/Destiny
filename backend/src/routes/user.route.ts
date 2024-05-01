@@ -1,13 +1,30 @@
 import express, { Request, Response, Router } from "express";
 import { User } from "../models/user.model";
 import jwt from "jsonwebtoken";
-import { check, validationResult } from "express-validator";
+import { check, validationResult, ValidationChain } from "express-validator";
 
 const router = Router();
 
+const strongPasswordValidator: ValidationChain = check("password")
+  .isStrongPassword({
+    minLength: 4, // Minimum length of the password
+    minLowercase: 1, // Minimum lowercase characters
+    minUppercase: 1, // Minimum uppercase characters
+    minNumbers: 1, // Minimum numbers
+    minSymbols: 1, // Minimum symbols
+  }).withMessage("Password must be strong");
+
+// {
+//   "email":"avi@gmail.com",
+//   "password":"aA@1"
+//   "firstName":"gopal",
+//   "lastName":"barman"
+// }
+
 router.post("/register", [
   check("email", "Please include a valid email").isEmail(),
-  check("password", "Please enter a password with 6 or more characters").isLength({ min: 6 }),
+  // check("password", "Please enter a password with 6 or more characters").isLength({ min: 6 }),
+  strongPasswordValidator, // Adding the strong password validation
   check("firstName", "Please enter a first name").isString(),
   check("lastName", "Please enter a last name").isString(),
 ], async (req: Request, res: Response) => {
