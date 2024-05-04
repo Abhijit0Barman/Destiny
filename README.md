@@ -1,8 +1,10 @@
+2:37:51
+
 # Destiny
  # Express TypeScript Starter Project with MongoDB, User Authentication, and Testing
 
 ## Introduction
-This is a starter project for building a RESTful API using Express, TypeScript, MongoDB, and Jest for testing. It includes user authentication and a simple test route.
+This is a starter project for building a RESTful API using Express, TypeScript, MongoDB. It includes user authentication and a simple test route.
 
 ## Prerequisites
 - Node.js and npm installed
@@ -21,7 +23,13 @@ npm install
 ## Configuration
 1. Create a `.env` file in the root directory and add the following environment variables:
 ```
-MONGODB_URL=mongodb://localhost:27017/your-database-name
+MONGODB_URL=mongodb+srv://abhijitbarman96:barman@destiny-cluster.tzx4lyn.mongodb.net/DestinyDB?retryWrites=true&w=majority&appName=Destiny-Cluster
+
+PORT=7000
+
+JWT_SECRET_KEY=https://randomkeygen.com/
+
+NODE_ENV=
 ```
 2. Replace `your-database-name` with the name of the MongoDB database you want to use.
 

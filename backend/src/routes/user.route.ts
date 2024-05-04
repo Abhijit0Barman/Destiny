@@ -36,9 +36,12 @@ router.post("/register", [
   try {
     let user = await User.findOne({ email: req.body.email, });
     if (user) {
-      return res.status(400).json({ msg: `User already exists` });
+      return res.status(400).json({ message: `User already exists` });
     }
-    user = new User(req.body);
+    let { email, password, firstName, lastName } = req.body
+    user = new User({
+      email: email.toLowerCase(), password, firstName: firstName.toLowerCase(), lastName: lastName.toLowerCase()
+    });
     //there is a middleware which is cheacking the password before saving the user
     await user.save();
 
@@ -55,10 +58,10 @@ router.post("/register", [
     //We are just going to send a message in the body of the response.
     //Because we are sending a HTTP cookie And this gets set automatically In the browser for us
     //It means we don't have to write any code on the frontend to handle this which is nice
-    return res.status(200).json({ msg: "User registered successfully" });
+    return res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     console.log(error);
-    return res.status(500).send({ msg: "Something went wrong" });
+    return res.status(500).send({ message: "Something went wrong" });
   }
 }
 );
