@@ -1,4 +1,5 @@
-2:37:51
+
+2:56:58
 
 # Destiny
  # Express TypeScript Starter Project with MongoDB, User Authentication, and Testing
@@ -149,46 +150,6 @@ npm start
 
 The API will be available at `http://localhost:3000/api/auth/login`.
 
-## Code Walkthrough
-
-### 1. Import the necessary modules
-
-```typescript
-import express, { Request, Response } from "express";
-import { check, validationResult } from "express-validator";
-import { User } from "../models/user.model";
-import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
-```
-
-- `express`: The Express framework for building web applications.
-- `express-validator`: A library for validating user input.
-- `User`: The User model from the database.
-- `bcryptjs`: A library for hashing passwords.
-- `jwt`: A library for generating JSON Web Tokens (JWTs).
-
-### 2. Define the login route
-
-```typescript
-router.post(
-  "/login",
-  [
-    check("email", "Email is required").isEmail(),
-    check(
-      "password",
-      "Password with 6 or more charecters is required"
-    ).isLength({ min: 6 }),
-  ],
-  async (req: Request, res: Response) => {
-    // ...
-  }
-);
-```
-
-- The `"/login"` route is defined using the `router.post()` method.
-- The route is protected with the `express-validator` middleware, which validates the user input.
-- The `check()` method is used to define
-
  # User Authentication with JWT and Cookies
 
 This Node.js script provides a secure user authentication mechanism using JSON Web Tokens (JWT) and HTTP cookies. It's designed to be part of a larger Express-based application.
@@ -197,59 +158,7 @@ This Node.js script provides a secure user authentication mechanism using JSON W
 
 The script handles user registration and sets a secure HTTP cookie named "auth_token" upon successful authentication.
 
-## Step-by-Step Explanation
 
-### 1. Importing Necessary Modules
-
-```typescript
-import express, { Request, Response, Router } from "express";
-import { User } from "../models/user.model";
-import jwt from "jsonwebtoken";
-import { check, validationResult } from "express-validator";
-```
-- We import the necessary modules and components from Express, our User model, JWT, and Express Validator for input validation.
-
-### 2. Defining the Express Router
-
-```typescript
-const router = Router();
-```
-- We create an Express router to handle our authentication routes.
-
-### 3. User Registration Route
-
-```typescript
-router.post(
-  "/register",
-  [
-    check("email", "Please include a valid email").isEmail(),
-    check(
-      "password",
-      "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 }),
-    check("firstName", "Please enter a first name").isString(),
-    check("lastName", "Please enter a last name").isString(),
-  ],
-  async (req: Request, res: Response) => {
-    // Check for errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-```
-- We define a POST route for user registration.
-- We use Express Validator to validate the user's input, ensuring that the email is valid, the password is at least 6 characters long, and the first and last names are provided.
-
-### 4. Checking for Existing User
-
-```typescript
-    try {
-      let user = await User.findOne({
-        email: req.body.email,
-      });
-      if (user) {
-        return res.status(400).json({ msg: `User already exists` });
-      }
-```
-- We check if a user with the provided email already exists in our database.
-
+List of Dependencies & devDependencies:
+1.  npm i cookie-parser     npm i --save-dev @types/cookie-parser
+2. 
