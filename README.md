@@ -1,5 +1,4 @@
-
-2:56:58
+3:30:01
 
 # Destiny
  # Express TypeScript Starter Project with MongoDB, User Authentication, and Testing

@@ -60,7 +60,7 @@ router.post("/register", [
     //It means we don't have to write any code on the frontend to handle this which is nice
     return res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).send({ message: "Something went wrong" });
   }
 }

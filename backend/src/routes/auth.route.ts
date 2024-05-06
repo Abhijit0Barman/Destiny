@@ -9,53 +9,63 @@ const router = express.Router();
 
 const strongPasswordValidator: ValidationChain = check("password")
   .isStrongPassword({
-    minLength: 4, // Minimum length of the password
+    minLength: 8, // Minimum length of the password
     minLowercase: 1, // Minimum lowercase characters
     minUppercase: 1, // Minimum uppercase characters
     minNumbers: 1, // Minimum numbers
     minSymbols: 1, // Minimum symbols
-  }).withMessage("Password must be strong");
+  })
+  .withMessage("Password must be strong");
 
-// {
-//   "email":"avi@gmail.com",
-//   "password":"aA@1"
-// }
 
-router.post("/login", [
-  check("email", "Email is required").isEmail(),
-  // check("password", "Password with 6 or more charecters is required").isLength({ min: 6 }),
-  strongPasswordValidator,
-], async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+router.post("/login",
+  [
+    check("email", "Email is required").isEmail(),
+    // check("password", "Password with 6 or more charecters is required").isLength({ min: 6 }),
+    strongPasswordValidator,
+  ],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    // Login logic here
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (!user) return res.status(400).json({ msg: "User does not exist" });
+      // compare password
+      const isMatch = await bcryptjs.compare(password, user.password);
+      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+
+      const token = jwt.sign(
+        { userId: user.id },
+        process.env.JWT_SECRET_KEY as string,
+        { expiresIn: "1d" }
+      );
+
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+      res.status(200).json({ userId: user._id }); //in the frontend they can use this userId to get the user data cause they cant access the token
+    } catch (error) {
+      // console.log(error);
+      res.status(500).json({ msg: "Server Error" });
+    }
   }
-  // Login logic here
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "User does not exist" });
-    // compare password
-    const isMatch = await bcryptjs.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
-
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: "1d", });
-
-    res.cookie("auth_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-    res.status(200).json({ userId: user._id });//in the frontend they can use this userId to get the user data cause they cant access the token 
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: "Server Error" });
-  }
-}
 );
 
 router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-  res.status(200).send({ userId: req.userId })
+  res.status(200).send({ userId: req.userId });
+});
+
+
+router.post("/logout", (req: Request, res: Response) => {
+  res.cookie("auth_token", "", {
+    expires: new Date(0)
+  })
 })
 
 export default router;

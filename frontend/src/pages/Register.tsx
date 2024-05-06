@@ -14,7 +14,7 @@ export type RegisterFormData = {
 
 // Register component for user registration
 const Register = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { showToast } = useAppContext();
   const {
     register, // function to register fields for validation
@@ -23,21 +23,20 @@ const Register = () => {
     formState: { errors }, // object containing form validation errors
   } = useForm<RegisterFormData>(); // useForm hook from react-hook-form library to handle form validation and submission
 
-
   const mutation = useMutation(apiClient.register, {
     onSuccess: () => {
-      showToast({ message: "Registration Success!", type: "SUCCESS" })
+      showToast({ message: "Registration Success!", type: "SUCCESS" });
       // console.log(`Registration Successfully ok`);
-      navigate("/")
+      navigate("/");
     },
     onError: (error: Error) => {
-      showToast({ message: error.message, type: "ERROR" })
+      showToast({ message: error.message, type: "ERROR" });
       // console.log(error.message);
     },
   });
 
-
-  const onSubmit = handleSubmit((data) => { // onSubmit function to handle form submission
+  const onSubmit = handleSubmit((data) => {
+    // onSubmit function to handle form submission
     console.log(data);
     mutation.mutate(data);
   });
@@ -49,15 +48,18 @@ const Register = () => {
         {/* First name field */}
         <div className="flex flex-col flex-1">
           <label className="font-bold">First Name</label>
-          <input className="p-2 border rounded w-full py-1 px-2 font-normal " type="text" id="firstName"
+          <input
+            className="p-2 border rounded w-full py-1 px-2 font-normal "
+            type="text"
+            id="firstName"
             {...register("firstName", {
               required: "First name is required", // validation rule: required field
               minLength: {
                 value: 2,
                 message: "First name must be at least 2 characters",
               }, // validation rule: minimum length
-            })
-            } />
+            })}
+          />
           {errors.firstName && (
             <p className="text-red-500">{errors.firstName.message}</p>
           )}{" "}
@@ -134,7 +136,8 @@ const Register = () => {
           id="confirmPassword"
           {...register("confirmPassword", {
             required: "Confirm password is required atleast 8 charector", // validation rule: required field
-            validate: (value) => value === watch("password") || "Passwords do not match", // validation rule: confirm password matches password field
+            validate: (value) =>
+              value === watch("password") || "Passwords do not match", // validation rule: confirm password matches password field
           })}
           className="p-2 border rounded w-full py-1 px-2 font-normal"
         />
@@ -144,7 +147,10 @@ const Register = () => {
         {/* display error message if confirm password is invalid */}
       </div>
 
-      <button type="submit" className="p-2 bg-blue-600 text-white rounded w-full font-bold hover:bg-blue-500 text-xl">
+      <button
+        type="submit"
+        className="p-2 bg-blue-600 text-white rounded w-full font-bold hover:bg-blue-500 text-xl"
+      >
         Register
       </button>
     </form>
